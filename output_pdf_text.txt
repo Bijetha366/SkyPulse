@@ -1,0 +1,173 @@
+FlutterDeveloperAssessment
+News&WeatherHub—HomeAssignment
+
+Objective
+
+Build a production-ready Flutter application that combines weather information and news updates. We're less
+interestedin apixel-perfectUIthaninhowyoustructure,test,andreasonaboutareal-world app.Yoursubmission
+should demonstrate:
+
+• Architecture
+• Statemanagement
+• APIintegration
+• Localpersistence
+• Responsive,accessible UI
+• Codequality,readability, andmaintainability
+
+StateManagement
+
+You're free to use any of the following — choose whatever you're most comfortable building a scalable,
+maintainable appwith:
+
+• BLoC
+• Cubit
+• GetX
+• Riverpod
+• Provider
+
+APIs
+
+Weather —Open-Meteo
+
+https://api.open-meteo.com/v1/forecast
+
+• No authenticationrequired
+• Completely free,generousratelimitsfornon-commercialuse
+• Required params:latitude,longitude, current_weather=true,
+daily=temperature_2m_max,temperature_2m_min,weathercode, timezone=auto
+
+News —NewsAPI.org
+
+https://newsapi.org
+
+• SignupforafreeAPIkeyatnewsapi.org/register
+• Useful endpoints:/v2/top-headlines (supports country& categoryfilters),/v2/everything
+
+API Key Handling
+
+• StoretheNewsAPIkeyusingenvironmentvariables(e.g.--dart-define,anon-committed.envfile
+withflutter_dotenv, orplatform-specific config).
+• Do NOTcommit APIkeystotherepository.Includea.env.exampleorequivalentwithplaceholder
+values,andaddtherealfileto .gitignore.
+• Open-Meteoneedsnokey,sothis requirementappliestotheNewsAPIonly.
+
+Implementation Constraints
+
+• Writeyour ownnetworking/repositorylayer forbothAPIs(usinghttp ordio isfine). Donotusean
+all-in-onewrapper packagethatfetches/parsesweatherornews foryou—wewanttoseehow
+youstructurethedatalayer.
+• Localpersistence(Hive/SQLite/Isar) mustbewiredbyyou,notauto-generatedboilerplateleft
+untouched—youshouldbeable toexplain yourschema.
+• All packagesusedmustbefreeandopen-source(pub.dev).Nopaid SDKs,noservicesrequiringa
+creditcard.
+
+RequiredFeatures
+Screen1 —Dashboard
+WeatherSection
+Display:
+
+• Currenttemperature
+• Weathercondition
+• Humidity
+• Windspeed
+• Cityname
+
+Usershould beable to:
+
+• Usecurrentdevicelocation,or
+• Searchweather bycityname(via thegeocodingstepdescribedabove)
+• Citysearchmustbedebounced(e.g.~400–500msaftertheuserstops typing)andcancel any
+in-flightrequestwhentheuser typesagain —avoidfiringa requestperkeystrokeor showing stale
+results fromanoutdatedquery.
+ForecastSection
+• Next5daysforecast
+
+• Horizontal scrollinglist
+News Section
+Display:
+
+• Latestheadlines
+• Thumbnail image
+• Sourcename
+• Publisheddate
+• Loadarticleswithpagination/ infinitescroll as theuserscrolls down(don't justfetchafixedbatch
+of10once)—atleast20articlesshouldbereachable byscrolling.
+Resilience
+• If theNewsorWeatherAPI call fails (nointernet,timeout,or non-200),retryautomatically witha
+shortbackoff(e.g.1–2attempts)beforeshowinganerror.
+• Cachethelastsuccessfulweatherandnews responselocally.If arefreshfails,showthecached
+datawithasmall "showing offlinedata from[time]" indicatorinstead ofablankerrorscreen.
+Refresh
+• Supportpull-to-refreshonthedashboard(refreshingbothweatherand news).
+
+Screen2 —News Details
+Display:
+
+• Articleimage
+• Title
+• Description
+• Source
+• Publisheddate
+
+Actions:
+
+• Openfullarticle in thebrowser
+• Sharearticle
+
+Screen3 —Bookmarks
+Usersshould beable to:
+
+• Saveanarticle
+• Removeanarticle
+• Viewall bookmarkedarticles
+
+Requirements:
+
+• Persistdatalocallyandsurviveapprestarts
+• UseHive,SQLite,orIsar (candidate's choice)
+
+Screen4 —Settings
+ThemeSettings
+
+• Lightmode
+• Darkmode
+• Persisttheselectionlocally
+WeatherSettings
+• Allowtheuser tosaveadefault city
+About Section
+• Appversion
+• Build number
+
+ErrorHandling&EdgeCases(evaluated)
+Pleasehandle,atminimum:
+
+• No internetconnection
+• APIfailures /non-200responses (includingNewsAPIrate-limit responses)
+• Locationpermissiondenied
+• Citynotfound(geocodingreturnsno results)
+• Emptystates (nobookmarks,nonewsreturned)
+
+DesignDecisionsWrite-Up
+
+In yourREADME,answerthefollowingin yourownwords(afewsentenceseachis enough):
+
+1. Whathappens in your appifboththeWeather andNews APIsfailatthesametime?Walkthrough
+it screenbyscreen.
+2. Whydid youchooseyourspecific localpersistenceoption(Hive/SQLite/Isar),andwhatwould
+changeif bookmarks neededtosync acrossa user's devices?
+3. If youhadonemoreday, what's thefirstthingyou'd refactor oradd, andwhy?
+
+SubmissionGuidelines
+Item
+Repository
+README
+Questions
+
+Details
+Pushyourcodetoapublic/privateGitHubrepoandAPK
+Include setup steps, how to add the NewsAPI key, architecture
+overview, yourDesign Decisionsanswers(above),andhowtorun
+thetests.
+Reachouttosameemail if anyrequirementis unclear.
+
+
