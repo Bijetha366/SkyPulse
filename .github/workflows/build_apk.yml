@@ -22,6 +22,10 @@ jobs:
       - name: Create dummy .env file
         run: cp .env.example .env
 
+      - name: Inject real NEWS_API_KEY
+        run: |
+          sed -i "s|NEWS_API_KEY=.*|NEWS_API_KEY=${{ secrets.NEWS_API_KEY || vars.NEWS_API_KEY }}|" .env
+
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
